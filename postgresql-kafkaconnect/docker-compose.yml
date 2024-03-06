@@ -1,0 +1,32 @@
+version: '2'
+services:
+  source_postgresql:
+      image: postgres:13.13
+      container_name: source_postgresql
+      ports:
+        - "5432:5432"
+      environment:
+        - POSTGRES_DB=source_pg
+        - POSTGRES_USER=root
+        - POSTGRES_PASSWORD=root
+      volumes:
+        - ./sql:/docker-entrypoint-initdb.d
+      networks:
+        - dataeng-data-platform
+
+  kafka-connect:
+    image: debezium/connect:1.6
+    container_name: kafka-connect
+    environment:
+      BOOTSTRAP_SERVERS: kafka:19092
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: connect_config
+      OFFSET_STORAGE_TOPIC: connect_offset
+    ports:
+      - "8083:8083"
+    networks:
+      - dataeng-data-platform
+
+networks:
+  dataeng-data-platform:
+    external: true

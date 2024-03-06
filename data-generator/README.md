@@ -1,5 +1,7 @@
 # Data-generator
 
-`data-generator` folder contain python and bash scripts that push data into mysql, postgresql and kafka topics
+`data-generator` folder contains scripts to generate data into mysql, postgresql and kafka topics
 
-To run a python script activate the venv by running `. .venv/bin/activate`
+Connection details(host, credentials) for the data stores are based on the deployments in this repository.
+
+To run the python scripts activate the venv by running `. .venv/bin/activate`

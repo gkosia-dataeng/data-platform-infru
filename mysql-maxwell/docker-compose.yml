@@ -1,0 +1,28 @@
+version: '2'
+services:
+  source_mysql:
+    image: mysql:8.3.0
+    container_name: source_mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    networks:
+      - dataeng-data-platform
+  
+  maxwell:
+    image: zendesk/maxwell:v1.41.0
+    container_name: maxwell
+    entrypoint: /bin/sh -c "sleep 30 && bin/maxwell --config /etc/maxwell/config.properties"
+    volumes:
+      - ./maxwell:/etc/maxwell/
+    depends_on:
+      - source_mysql
+    networks:
+      - dataeng-data-platform
+    
+networks:
+  dataeng-data-platform:
+    external: true
