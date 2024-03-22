@@ -6,3 +6,5 @@ Can be accessed from external on `localhost:9090`
 
 Username: `minIOuser` \
 Password: `minIOpass`
+
+
