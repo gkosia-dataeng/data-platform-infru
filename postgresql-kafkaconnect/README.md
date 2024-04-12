@@ -27,3 +27,6 @@ docker-compose up -d
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @./postgresql-register.json
 
 ```
+
+
+psql -U root -d source_pg
