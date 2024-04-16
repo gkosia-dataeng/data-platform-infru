@@ -1,0 +1,1 @@
+[mysql -> kafka connect -> kafka -> flink -> hudi -> minIO](https://www.linkedin.com/pulse/bringing-data-from-mysql-kafka-using-debezium-joining-soumil-shah-pewle/)
