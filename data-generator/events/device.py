@@ -11,7 +11,7 @@ customer_id: list = ["CI" + str(_id).rjust(5, '0') for _id in range(100, 121)]
 
 
 # Generate event data from devices
-def generate_events(offset=0):
+def generate_device_event(offset=0):
     _event = {
         "eventId": str(uuid.uuid4()),
         "eventOffset": offset,

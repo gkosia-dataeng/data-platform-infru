@@ -1,4 +1,7 @@
 import psycopg2
+from events.product import get_product_info
+import random
+import time
 
 # Replace these with your actual PostgreSQL database credentials
 db_config = {
@@ -9,12 +12,6 @@ db_config = {
     'port': '5432',  # Usually 
 }
 
-# Sample data to insert into the 'employees' table
-products_data = [
-    (3,'banana','fruits'),
-    (4,'powerbi','data'),
-    (5,'pandas','data')
-]
 
 # Function to insert records into the 'employees' table
 def insert_records(connection, data):
@@ -47,8 +44,19 @@ def insert_records(connection, data):
 try:
     connection = psycopg2.connect(**db_config)
 
-    # Insert records into the 'employees' table
-    insert_records(connection, products_data)
+
+    product_id = 1
+    insert_records(connection, get_product_info(product_id))
+                   
+    while True:
+
+        if random.randint(1,3) < 2 and product_id < 20:
+            product_id+=1
+            insert_records(connection, get_product_info(product_id))
+        
+        time.sleep(random.randint(3,6))
+
+
 
 except Exception as e:
     print(f"Error connecting to PostgreSQL: {e}")

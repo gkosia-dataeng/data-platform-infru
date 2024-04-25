@@ -1,4 +1,7 @@
 import mysql.connector
+import random
+from events.customer import get_new_customer_info
+import time
 
 # Replace these with your actual MySQL server and database credentials
 db_config = {
@@ -8,12 +11,6 @@ db_config = {
     "database": "mysql_data",
 }
 
-# Sample data to insert into the 'users' table
-user_data = [
-    (2,"John Doe", 25),
-    (3,"Jane Smith", 30),
-    (4,"Bob Johnson", 22),
-]
 
 # Function to insert records into the 'users' table
 def insert_records(connection, data):
@@ -49,8 +46,18 @@ def insert_records(connection, data):
 try:
     connection = mysql.connector.connect(**db_config)
 
-    # Insert records into the 'users' table
-    insert_records(connection, user_data)
+    customer_id = 1
+    insert_records(connection, get_new_customer_info(customer_id))
+                   
+    while True:
+
+        if random.randint(1,3) < 2 and customer_id < 50:
+            customer_id+=1
+            insert_records(connection, get_new_customer_info(customer_id))
+        
+        time.sleep(random.randint(3,6))
+
+
 
 except Exception as e:
     print(f"Error connecting to MySQL: {e}")
