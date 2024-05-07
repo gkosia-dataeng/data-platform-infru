@@ -14,3 +14,8 @@ docker network create dataeng-data-platform
 [mysql-maxwell](./mysql-maxwell): consume cdc from mysql using maxwell\
 [postgresql-kafkaconnect](./postgresql-kafkaconnect/): consume cdc from postgresql using kafka connect\
 [spark-cluster-mode](./spark-cluster-mode/): spark cluster with 2 worker nodes
+
+
+
+Find process use the port:
+``sudo lsof -t -i:5432``
