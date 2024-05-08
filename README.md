@@ -19,3 +19,12 @@ docker network create dataeng-data-platform
 
 Find process use the port:
 ``sudo lsof -t -i:5432``
+
+
+```
+docker network create dataeng-data-platform
+docker-compose -f ./minIO/docker-compose.yml up -d
+docker-compose -f ./hive-metastore/docker-compose.yml up -d
+docker-compose -f ./spark-cluster/docker-compose.yml up -d
+docker exec spark-master spark-submit /opt/spark-apps/test_job.py
+```

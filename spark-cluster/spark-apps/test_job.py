@@ -3,14 +3,10 @@ from pyspark.sql import SparkSession
 
 def main():
 
-    source_bucket = "lakehouse"
-
     spark = SparkSession.builder \
-        .appName("CSV File to Delta Lake Table") \
+        .appName("Test cluster job") \
         .enableHiveSupport() \
         .getOrCreate()
-
-    delta_path = f"s3a://{source_bucket}/delta/bronze/"
 
     spark.sql("DROP SCHEMA IF EXISTS bronze CASCADE")
 
@@ -24,9 +20,13 @@ def main():
 
     df.show()
 
-    df.write.format("delta").option("delta.columnMapping.mode", "name")\
-        .option("path", f'{delta_path}/test_table')\
-        .saveAsTable("bronze.test_table")
+    (
+        df.
+        write.
+        format("delta").
+        option("delta.columnMapping.mode", "name").
+        saveAsTable("test_table")
+    )
 
     dt = DeltaTable.forName(spark, "bronze.test_table")
 
