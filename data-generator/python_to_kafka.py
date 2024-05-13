@@ -9,8 +9,8 @@ __bootstrap_server = "localhost:9092"
 __customers_topic = "customers"
 __orders_topic    = "orders"
 
-def post_to_kafka(topic, customer_id, data):
-    producer = KafkaProducer(bootstrap_servers = __bootstrap_server)
+def post_to_kafka(producer, topic, customer_id, data):
+    
     producer.send(topic, key= bytes(str(customer_id), 'utf-8'), value=data)
 
     producer.close()
@@ -28,15 +28,22 @@ if __name__ == "__main__":
 
     customer_id = 1
 
-    while True:
 
-        if random.randint(1,3) < 2 and customer_id < 50:
-            customer_id+=1
-            post_to_kafka(__customers_topic, customer_id, bytes(str(get_new_customer_event(customer_id)), 'utf-8'))
-        
-        for i in range(random.randint(0,8)):
-            tmp_cust = random.randint(1,customer_id)
-            post_to_kafka(__orders_topic, tmp_cust , bytes(str(get_order_event(tmp_cust)), 'utf-8'))
-        
-        time.sleep(random.randint(3,6))
-        
+    try:
+        producer = KafkaProducer(bootstrap_servers = __bootstrap_server)
+
+        while True:
+
+            if random.randint(1,3) < 2 and customer_id < 50:
+                customer_id+=1
+                post_to_kafka(producer, __customers_topic, customer_id, bytes(str(get_new_customer_event(customer_id)), 'utf-8'))
+            
+            for i in range(random.randint(0,8)):
+                tmp_cust = random.randint(1,customer_id)
+                post_to_kafka(producer, __orders_topic, tmp_cust , bytes(str(get_order_event(tmp_cust)), 'utf-8'))
+            
+            time.sleep(random.randint(3,6))
+    except Exception as e:
+        print(str(e))
+    finally:
+        producer.close()

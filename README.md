@@ -1,5 +1,5 @@
 # data-platform-infru
-This repository contains docker-compose setups to build a data platform from open source tools
+This repository contains docker-compose setups to build a data platform from open source tools. Can be used to setup a playground and learn about batch or streaming data processing.
 <br></br><br></br>
 # Require
 ### **** Create the docker network to deploy all apps in the `dataeng-data-platform` 
@@ -7,8 +7,12 @@ This repository contains docker-compose setups to build a data platform from ope
 docker network create dataeng-data-platform
 ```
 
+
 ### Apps 
 [data-generator](./data-generator/): python scripts to push data in mysql, postgresql or kafka\
+[flink-python](./flink-python/): flink cluster with python installed, used to practice pyflink api \
+[flink-sql](./flink-sql/): a flink cluster with a flink sql client instance \
+[hive-metastore](./hive-metastore/): a hive metastore, configured to integrate with minIO setup as storage \
 [kafka-core](./kafka-core/): zookeeper and kafka broker\
 [minIO](./minIO): object storage, s3 compatible\
 [mysql-maxwell](./mysql-maxwell): consume cdc from mysql using maxwell\
@@ -17,9 +21,7 @@ docker network create dataeng-data-platform
 
 
 
-Find process use the port:
-``sudo lsof -t -i:5432``
-
+### Example - spin up the services for a lakehouse 
 
 ```
 docker network create dataeng-data-platform
@@ -28,3 +30,6 @@ docker-compose -f ./hive-metastore/docker-compose.yml up -d
 docker-compose -f ./spark-cluster/docker-compose.yml up -d
 docker exec spark-master spark-submit /opt/spark-apps/test_job.py
 ```
+
+In case a port is already binded, find the process that use the port:
+``sudo lsof -t -i:5432``
