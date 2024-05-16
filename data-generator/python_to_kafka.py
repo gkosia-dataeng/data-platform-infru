@@ -31,15 +31,16 @@ if __name__ == "__main__":
 
     try:
         producer = KafkaProducer(bootstrap_servers = __bootstrap_server)
-
+        post_to_kafka(producer, __customers_topic, customer_id, bytes(str(get_new_customer_event(customer_id)), 'utf-8'))
+        
         while True:
 
             if random.randint(1,3) < 2 and customer_id < 50:
                 customer_id+=1
                 post_to_kafka(producer, __customers_topic, customer_id, bytes(str(get_new_customer_event(customer_id)), 'utf-8'))
             
+            tmp_cust = random.randint(1,customer_id)
             for i in range(random.randint(0,8)):
-                tmp_cust = random.randint(1,customer_id)
                 post_to_kafka(producer, __orders_topic, tmp_cust , bytes(str(get_order_event(tmp_cust)), 'utf-8'))
             
             time.sleep(random.randint(3,6))

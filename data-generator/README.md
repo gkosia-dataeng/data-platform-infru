@@ -22,13 +22,15 @@ kafka: messages in json
                  ,"amount": 100 
                } 
 ```
+</br>
+</br>
 
-mysql: 
+mysql: database mysql_data
 ```
     symbol (
-        name varchar(100)
+        symbol varchar(100)
         category varchar(100)
-        price decimal(18,2)
+        current_price decimal(18,2)
     )
 
     trades (
@@ -38,18 +40,22 @@ mysql:
     )
 ```
 
-postgresql
+</br>
+</br>
+
+postgresql: database source_pg
 ```
 
     product (
-        name      varchar(100)
-        category  varchar(100)
-        color     varchar(100)
-        stock     int
+         name      varchar(100)
+        ,category  varchar(100)
+        ,color     varchar(100)
+        ,stock     int
     )
 
     sales (
-         sales_date  datetime
+         product     varchar(100)
+        ,sales_date  datetime
         ,quantity    int
         ,unit_price  decimal(18,2)
     )
@@ -61,6 +67,6 @@ The folder `./events` contains methods that return the fake data
 
 
 `python_to_kafka.py` : produce json messages in topics `customers` and `orders`.
-                       if the topics does not exists then it is create them
+                       if the topics does not exists then it is create them.
 `python_to_mysql_insert_customers.py`: insert data in table customers in mysql db
                        

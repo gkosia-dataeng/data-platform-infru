@@ -1,6 +1,7 @@
 import mysql.connector
 import random
 from events.customer import get_new_customer_info
+from events.order import get_order_info
 import time
 
 # Replace these with your actual MySQL server and database credentials
@@ -11,50 +12,58 @@ db_config = {
     "database": "mysql_data",
 }
 
-
-# Function to insert records into the 'users' table
-def insert_records(connection, data):
+def execute_query(connection, query, data):
     cursor = connection.cursor()
-
-    # SQL query to insert records into the 'users' table
-    sql_query = "INSERT INTO customers (id,name,age) VALUES (%s, %s, %s)"
-
     try:
         # Execute the query for each set of data
-        cursor.executemany(sql_query, data)
-
+        print(f"{data} it is a type of {type(data)}")
+        cursor.executemany(query, [data])
         # Commit the changes
         connection.commit()
-        print("Records inserted successfully")
-
     except Exception as e:
         # Rollback in case of an error
         connection.rollback()
-        print(f"Error: {e}")
-
+        print(f"Error: {e}, {data}")
     finally:
         # Close the cursor and connection
         cursor.close()
 
+# Function to insert records into the 'users' table
+def create_customer(connection, data):
+    sql_query = "INSERT INTO customers (customerid, name, age, balance) VALUES (%s, %s, %s, %s)"
+    execute_query(connection, sql_query, data)
+    
+def create_order(connection, data):
 
-
-
-
-
+    sql_query = "INSERT INTO orders (customerid, create_date, productId, amount) VALUES (%s, %s, %s, %s)"
+    execute_query(connection, sql_query, data)
+    
+def update_balance(connection, customer_id):
+    sql_query = "UPDATE customers SET balance = balance - (SELECT SUM(amount) FROM orders WHERE customerid = %s)"
+    execute_query(connection, sql_query, customer_id)
 
 # Connect to the MySQL server
 try:
     connection = mysql.connector.connect(**db_config)
 
     customer_id = 1
-    insert_records(connection, get_new_customer_info(customer_id))
+    create_customer(connection, get_new_customer_info(customer_id))
                    
     while True:
 
         if random.randint(1,3) < 2 and customer_id < 50:
             customer_id+=1
-            insert_records(connection, get_new_customer_info(customer_id))
-        
+            create_customer(connection, get_new_customer_info(customer_id))
+
+        # create orders and update balance
+        tmp_cust = random.randint(1,customer_id)
+        num_of_orders = random.randint(0,8)
+        for i in range(num_of_orders):
+            create_order(connection, get_order_info(tmp_cust))
+
+        if num_of_orders > 0:
+            update_balance(connection, [tmp_cust])
+
         time.sleep(random.randint(3,6))
 
 
