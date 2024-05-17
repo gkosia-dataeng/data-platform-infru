@@ -9,9 +9,10 @@ create table public.customers (
 create table public.orders (
    customerid int
   ,productId  varchar(100)
-  ,create_date datetime
+  ,create_date TIMESTAMP 
   ,amount decimal(18,2)
 );
+
 
 
 ALTER SYSTEM SET wal_level = logical;

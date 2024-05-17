@@ -19,13 +19,13 @@ def execute_query(connection, query, data):
     cursor = connection.cursor()
     try:
         # Execute the query for each set of data
-        cursor.executemany(query, data)
+        cursor.executemany(query, [data])
         # Commit the changes
         connection.commit()
     except Exception as e:
         # Rollback in case of an error
         connection.rollback()
-        print(f"Error: {e}")
+        print(f"Error: {e}, {data}, {query}")
     finally:
         # Close the cursor and connection
         cursor.close()
@@ -38,7 +38,7 @@ def create_customer(connection, data):
     
 def create_order(connection, data):
 
-    sql_query = "INSERT INTO public.orders (customerid, productId, create_date, amount) VALUES (%s, %s, %s, %s)"
+    sql_query = "INSERT INTO public.orders (customerid, create_date, productId, amount) VALUES (%s, %s, %s, %s)"
     execute_query(connection, sql_query, data)
     
 def update_balance(connection, customer_id):

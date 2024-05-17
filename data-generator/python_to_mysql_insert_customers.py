@@ -16,7 +16,6 @@ def execute_query(connection, query, data):
     cursor = connection.cursor()
     try:
         # Execute the query for each set of data
-        print(f"{data} it is a type of {type(data)}")
         cursor.executemany(query, [data])
         # Commit the changes
         connection.commit()

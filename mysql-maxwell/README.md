@@ -41,3 +41,9 @@ mysql -u root  -h 127.0.0.1 -P 3306 mysql_data -p
 // inspect the schema of table 
 describe orders; 
 ```
+
+
+
+
+kafka-console-consumer --bootstrap-server localhost:19092 --topic cdc_mysql_data_customers
+kafka-console-consumer --bootstrap-server localhost:19092 --topic cdc_mysql_data_orders
