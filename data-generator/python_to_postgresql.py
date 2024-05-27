@@ -42,8 +42,8 @@ def create_order(connection, data):
     execute_query(connection, sql_query, data)
     
 def update_balance(connection, customer_id):
-    sql_query = "UPDATE public.customers SET balance = balance - (SELECT SUM(amount) FROM public.orders WHERE customerid = %s)"
-    execute_query(connection, sql_query, customer_id)
+    sql_query = f"UPDATE public.customers SET balance = balance - (SELECT SUM(amount) FROM public.orders WHERE customerid = {customer_id})"
+    execute_query(connection, sql_query, None)
 
 
 
