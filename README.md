@@ -1,6 +1,7 @@
 # data-platform-infru
-This repository contains docker-compose setups to build a data platform from open source tools. Can be used to setup a playground and learn about batch or streaming data processing.
-<br></br><br></br>
+This repository contains docker-compose setups to build a data platform from open source tools. \
+Can be used to setup a playground and learn about batch or streaming data processing.
+<br></br>
 # Require
 ### **** Create the docker network to deploy all apps in the `dataeng-data-platform` 
 ```

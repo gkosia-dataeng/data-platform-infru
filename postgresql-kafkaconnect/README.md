@@ -33,3 +33,6 @@ psql -U root -d source_pg
 ```
 
 
+In case a port is already binded, find the process that use the port:
+``sudo lsof -t -i:5432``
+
