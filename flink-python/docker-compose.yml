@@ -1,0 +1,40 @@
+version: '2'
+services:
+  flinkjobmanager:
+    build: .
+    ports:
+      - "8085:8081"
+    command: jobmanager
+    volumes:
+      - ./jobs:/home/jobs
+      - ./data:/home/data
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: flinkjobmanager
+    networks:
+      - dataeng-data-platform
+    
+
+  flinktaskmanager:
+    build: .
+    networks:
+      - dataeng-data-platform
+    command: taskmanager
+    volumes:
+      - ./jobs:/home/jobs
+      - ./data:/home/data
+    scale: 1
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: flinkjobmanager
+        taskmanager.numberOfTaskSlots: 2
+    depends_on: 
+      - flinkjobmanager
+
+
+networks:
+  dataeng-data-platform:
+    external: true
+  

@@ -14,7 +14,20 @@ services:
     networks:
       - dataeng-data-platform
     command: server /data --console-address ":9090"
-
+  createbucket:
+    hostname: createbucket
+    container_name: createbucket
+    image: minio/mc:RELEASE.2024-01-13T08-44-48Z
+    depends_on:
+     - minIO
+    entrypoint: >
+      /bin/sh -c "
+      /usr/bin/mc alias set myminio http://minIO:9000 minIOuser minIOpass;
+      /usr/bin/mc mb myminio/lakehouse;
+      /usr/bin/mc anonymous set public myminio/lakehouse;
+      "
+    networks:
+      - dataeng-data-platform
 networks:
   dataeng-data-platform:
     external: true

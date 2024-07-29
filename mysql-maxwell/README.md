@@ -31,4 +31,19 @@ bash ./create_required_topics.sh
 
 # start mysql and maxwell
 docker-compose up -d
+
+# login in container of mysql and execute below to login to database
+mysql -u root  -h 127.0.0.1 -P 3306 mysql_data -p
+
+// inspect the tables
+ show tables;
+
+// inspect the schema of table 
+describe orders; 
 ```
+
+
+
+
+kafka-console-consumer --bootstrap-server localhost:19092 --topic cdc_mysql_data_customers
+kafka-console-consumer --bootstrap-server localhost:19092 --topic cdc_mysql_data_orders

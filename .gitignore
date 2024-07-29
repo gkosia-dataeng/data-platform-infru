@@ -3,3 +3,8 @@
 */data/*
 
 *.csv*
+
+*.pyc
+
+
+*.jar

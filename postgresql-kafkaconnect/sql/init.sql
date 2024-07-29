@@ -1,6 +1,18 @@
-create table public.product(id int, name varchar(100), category varchar(100));
-insert into public.product values(1,'car','vehicles');
-insert into public.product values(2,'apple','fruits');
+create table public.customers (
+  customerid int, 
+  name varchar(100),
+  age int,
+  balance decimal(18,2) 
+        
+);
+
+create table public.orders (
+   customerid int
+  ,productId  varchar(100)
+  ,create_date TIMESTAMP 
+  ,amount decimal(18,2)
+);
+
 
 
 ALTER SYSTEM SET wal_level = logical;
