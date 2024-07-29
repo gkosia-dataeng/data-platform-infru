@@ -7,6 +7,7 @@ def main():
         .appName("Test delt job") \
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
         .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
+        .config("spark.sql.catalogImplementation", "hive") \
         .config("spark.sql.warehouse.dir", "s3a://lakehouse/warehouse/delta") \
         .config("spark.jars", "/opt/bitnami/spark/jars/delta-core_2.12-2.4.0.jar,/opt/bitnami/spark/jars/delta-storage-2.4.0.jar") \
         .enableHiveSupport() \
