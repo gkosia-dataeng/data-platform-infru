@@ -26,10 +26,10 @@ From the master node, navigate to the spark-apps directory `cd ../../spark-apps`
 Some of the test jobs are writting to data lake so before you execute that kind of job start the minIO (data lake app) and Hive (metastore) containers.
 ```
     # start the minIO
-    docker-compose -f ../minIO/docker-compose.yml -d
+    docker-compose -f ../minIO/docker-compose.yml up -d
 
     # start the Hive metastore
-    docker-compose -f ../hive-metastore/docker-compose.yml -d
+    docker-compose -f ../hive-metastore/docker-compose.yml up -d
 
 ```
 
