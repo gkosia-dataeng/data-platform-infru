@@ -14,6 +14,23 @@ create table public.orders (
 );
 
 
+create table public.deals(
+   deal_id INT
+  ,platform_position_id INT
+  ,login INT
+  ,server varchar(100)
+  ,execution_time TIMESTAMP 
+  ,position_impact   varchar(100)
+  ,trade_direction
+  ,volumn int
+  ,profit decimal(18,2)
+);
+
+CREATE TABLE public.mt4account(
+   login INT 
+  ,group varchar(100)
+  ,user_id int
+);
 
 ALTER SYSTEM SET wal_level = logical;
 ALTER SYSTEM SET max_wal_senders = 4;

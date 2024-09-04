@@ -1,7 +1,7 @@
 FROM flink:1.19.0
 
 RUN apt-get update -y && \
-apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev libffi-dev && \
+apt-get install -y build-essential libssl-dev zlib1g-dev libbz2-dev liblzma-dev libffi-dev && \
 wget https://www.python.org/ftp/python/3.11.9/Python-3.11.9.tgz && \
 tar -xvf Python-3.11.9.tgz && \
 cd Python-3.11.9 && \
