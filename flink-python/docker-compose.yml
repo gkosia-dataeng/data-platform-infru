@@ -1,5 +1,18 @@
 version: '2'
 services:
+  sql-client:
+    build: .
+    command: bin/sql-client.sh
+    depends_on:
+      - flinkjobmanager
+    environment:
+      - |
+        FLINK_PROPERTIES=
+        jobmanager.rpc.address: flinkjobmanager
+        rest.address: flinkjobmanager
+    networks:
+      - dataeng-data-platform
+
   flinkjobmanager:
     build: .
     ports:

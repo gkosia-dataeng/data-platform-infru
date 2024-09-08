@@ -25,10 +25,11 @@ docker-compose up -d
 
 # register the connector using the properties file
 curl -i -X POST -H "Accept:application/json" -H  "Content-Type:application/json" http://localhost:8083/connectors/ -d @./postgresql-register.json
+url -X DELETE http://localhost:8083/connectors/source_pg-connector
 
 
 # connect to postgresql db
-docker exec -it <postgresql container id> /bin/bash
+docker exec -it source_postgresql /bin/bash
 psql -U root -d source_pg
 ```
 

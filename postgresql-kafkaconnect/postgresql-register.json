@@ -11,6 +11,10 @@
        "topic.prefix": "source_pg",
        "schema.include.list": "public",
        "database.server.name": "source_postgresql",
-       "plugin.name": "pgoutput"
+       "plugin.name": "pgoutput",
+       "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "key.converter.schemas.enable": "false",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": "false"
        }
  }

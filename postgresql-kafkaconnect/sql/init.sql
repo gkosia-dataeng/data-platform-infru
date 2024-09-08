@@ -13,24 +13,28 @@ create table public.orders (
   ,amount decimal(18,2)
 );
 
-
+-- insert into public.deals values(1,111,1,'mt5','20240-10-01 10:15:00',1,1,100,0);
 create table public.deals(
    deal_id INT
   ,platform_position_id INT
   ,login INT
   ,server varchar(100)
   ,execution_time TIMESTAMP 
-  ,position_impact   varchar(100)
-  ,trade_direction
+  ,position_impact int
+  ,trade_direction int
   ,volumn int
-  ,profit decimal(18,2)
+  ,profit int
 );
 
+
+-- insert into public.mt4account values(1, 'aaa',11)
 CREATE TABLE public.mt4account(
    login INT 
-  ,group varchar(100)
+  ,login_group varchar(100)
   ,user_id int
 );
+
+ALTER TABLE public.mt4account REPLICA IDENTITY FULL;
 
 ALTER SYSTEM SET wal_level = logical;
 ALTER SYSTEM SET max_wal_senders = 4;
