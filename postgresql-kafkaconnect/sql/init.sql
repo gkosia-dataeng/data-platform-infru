@@ -34,6 +34,10 @@ CREATE TABLE public.mt4account(
   ,user_id int
 );
 
+insert into public.mt4account values(1, 'aaa',11);
+insert into public.deals values(1,111,1,'mt5','20240-10-01 10:15:00',2,1,100,10);
+
+
 ALTER TABLE public.mt4account REPLICA IDENTITY FULL;
 
 ALTER SYSTEM SET wal_level = logical;
