@@ -40,7 +40,24 @@ services:
       - zookeeper
     networks:
       - dataeng-data-platform
-      
+
+
+  wait-for-kafka:
+    image: confluentinc/cp-kafka:7.3.2
+    hostname: wait-for-kafka
+    container_name: wait-for-kafka
+    depends_on:
+      - kafka
+    command: >
+      sh -c "chmod +x /home/wait-for-it.sh
+      && /home/wait-for-it.sh kafka:19092 
+      && kafka-topics --bootstrap-server kafka:19092 --create --topic cdc_mysql_data_customers
+      && kafka-topics --bootstrap-server kafka:19092 --create --topic cdc_mysql_data_orders
+      && kafka-topics --bootstrap-server kafka:19092 --create --topic mysql_ddl"
+    volumes:
+      - ./wait-for-it.sh:/home/wait-for-it.sh
+    networks:
+      - dataeng-data-platform
 networks:
   dataeng-data-platform:
     external: true

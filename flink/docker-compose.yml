@@ -4,57 +4,51 @@ services:
     build: .
     command: bin/sql-client.sh
     depends_on:
-      - jobmanager
+      - flinkjobmanager
     environment:
       - |
         FLINK_PROPERTIES=
-        jobmanager.rpc.address: jobmanager
-        rest.address: jobmanager
+        jobmanager.rpc.address: flinkjobmanager
+        rest.address: flinkjobmanager
     networks:
       - dataeng-data-platform
 
-  jobmanager:
+  flinkjobmanager:
     build: .
     ports:
       - "8081:8081"
     command: jobmanager
     volumes:
-      - flink_data:/tmp/
+      - ./jobs:/home/jobs
+      - ./data:/home/data
+      - /home/gkosia/my-repos/flink/pyflink:/home/tutorial
     environment:
       - |
         FLINK_PROPERTIES=
-        jobmanager.rpc.address: jobmanager
-        state.backend: filesystem
-        state.checkpoints.dir: file:///tmp/flink-checkpoints
-        heartbeat.interval: 1000
-        heartbeat.timeout: 5000
-        rest.flamegraph.enabled: true
-        web.backpressure.refresh-interval: 10000
+        jobmanager.rpc.address: flinkjobmanager
     networks:
       - dataeng-data-platform
-        
-  taskmanager:
+    
+
+  flinktaskmanager:
     build: .
-    depends_on:
-      - jobmanager
+    networks:
+      - dataeng-data-platform
     command: taskmanager
     volumes:
-      - flink_data:/tmp/
+      - ./jobs:/home/jobs
+      - ./data:/home/data
+    scale: 1
     environment:
       - |
         FLINK_PROPERTIES=
-        jobmanager.rpc.address: jobmanager
-        taskmanager.numberOfTaskSlots: 3
-        state.backend: filesystem
-        state.checkpoints.dir: file:///tmp/flink-checkpoints
-        heartbeat.interval: 1000
-        heartbeat.timeout: 5000
-    networks:
-      - dataeng-data-platform
+        jobmanager.rpc.address: flinkjobmanager
+        taskmanager.numberOfTaskSlots: 2
+    depends_on: 
+      - flinkjobmanager
+
 
 networks:
   dataeng-data-platform:
     external: true
-
-volumes:
-  flink_data:
+  

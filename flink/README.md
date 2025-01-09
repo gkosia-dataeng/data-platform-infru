@@ -1,3 +1,1 @@
-Flink UI: http://localhost:8081/
-
-Run the flink sql client:  docker-compose run sql-client
+https://nightlies.apache.org/flink/flink-docs-master/docs/dev/python/overview/
