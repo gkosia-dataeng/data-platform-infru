@@ -53,7 +53,10 @@ services:
       && /home/wait-for-it.sh kafka:19092 
       && kafka-topics --bootstrap-server kafka:19092 --create --topic cdc_mysql_data_customers
       && kafka-topics --bootstrap-server kafka:19092 --create --topic cdc_mysql_data_orders
-      && kafka-topics --bootstrap-server kafka:19092 --create --topic mysql_ddl"
+      && kafka-topics --bootstrap-server kafka:19092 --create --topic mysql_ddl
+      && kafka-topics --bootstrap-server kafka:19092 --create --topic test-source-atopic
+      && kafka-topics --bootstrap-server kafka:19092 --create --topic test-source-btopic
+      && kafka-topics --bootstrap-server kafka:19092 --create --topic test-sink-topic"
     volumes:
       - ./wait-for-it.sh:/home/wait-for-it.sh
     networks:
