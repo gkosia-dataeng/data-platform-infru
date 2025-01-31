@@ -19,9 +19,8 @@ services:
       - "8081:8081"
     command: jobmanager
     volumes:
-      - ./jobs:/home/jobs
+      - ~/my-repos/flink/flink_python/:/home/jobs
       - ./data:/home/data
-      - /home/gkosia/my-repos/flink/pyflink:/home/tutorial
     environment:
       - |
         FLINK_PROPERTIES=
@@ -36,7 +35,7 @@ services:
       - dataeng-data-platform
     command: taskmanager
     volumes:
-      - ./jobs:/home/jobs
+      - ~/my-repos/flink/flink_python/:/home/jobs
       - ./data:/home/data
     scale: 1
     environment:
